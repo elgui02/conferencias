@@ -1,4 +1,48 @@
 umg_conferencia_homepage:
     path:     /
     defaults: { _controller: UmgConferenciaBundle:Default:index }
-    
+
+Alumno_home:
+    resource:	"@UmgConferenciaBundle/Controller/AlumnoController.php"
+    type:	annotation
+#alumno
+
+AlumnoPago_home:
+    resource:   "@UmgConferenciaBundle/Controller/AlumnoPagoController.php"
+    type:       annotation
+#alumnopago
+
+AlumnoRecuerdo_home:
+    resource:   "@UmgConferenciaBundle/Controller/AlumnoRecuerdoController.php"
+    type:       annotation
+#alumnorecuerdo
+
+ConferenciaAlumno_home:
+    resource:   "@UmgConferenciaBundle/Controller/ConferenciaAlumnoController.php"
+    type:       annotation
+#conferenciaalumno
+
+Conferenciasta_home:
+    resource:   "@UmgConferenciaBundle/Controller/ConferencistumController.php"
+    type:       annotation
+#conferencista
+
+Conferencia_home:
+    resource:   "@UmgConferenciaBundle/Controller/ConferenciumController.php"
+    type:       annotation
+#conferencia
+
+Recuerdo_home:
+    resource:   "@UmgConferenciaBundle/Controller/RecuerdoController.php"
+    type:       annotation
+#recuerdo
+
+Salon_home:
+    resource:   "@UmgConferenciaBundle/Controller/SalonController.php"
+    type:       annotation
+#salon
+
+Usuario_home:
+    resource:   "@UmgConferenciaBundle/Controller/UsuarioController.php"
+    type:       annotation
+#usuario

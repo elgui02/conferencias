@@ -37,6 +37,11 @@ class AlumnoEvento
     protected $Evento_id;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $Pagado;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Alumno", inversedBy="alumnoEventos")
      * @ORM\JoinColumn(name="Alumno_id", referencedColumnName="id")
      */
@@ -122,6 +127,29 @@ class AlumnoEvento
     }
 
     /**
+     * Set the value of Pagado.
+     *
+     * @param boolean $Pagado
+     * @return \Umg\ConferenciaBundle\Entity\AlumnoEvento
+     */
+    public function setPagado($Pagado)
+    {
+        $this->Pagado = $Pagado;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of Pagado.
+     *
+     * @return boolean
+     */
+    public function getPagado()
+    {
+        return $this->Pagado;
+    }
+
+    /**
      * Set Alumno entity (many to one).
      *
      * @param \Umg\ConferenciaBundle\Entity\Alumno $alumno
@@ -169,6 +197,6 @@ class AlumnoEvento
 
     public function __sleep()
     {
-        return array('id', 'Alumno_id', 'Evento_id');
+        return array('id', 'Alumno_id', 'Evento_id', 'Pagado');
     }
 }

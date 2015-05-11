@@ -1,30 +1,29 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>ConferenciaAlumno list</h1>
+    <h1>Lista de eventos</h1>
 
-    <table class="records_list">
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Alumno_id</th>
-                <th>Conferencia_id</th>
-                <th>Actions</th>
+                <th>Nombre</th>
+                <th>Fecha inicio</th>
+                <th>Fecha fin</th>
+                <th>Lugar</th>
+                <th>Actiones</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('conferenciaalumno_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.Alumnoid }}</td>
-                <td>{{ entity.Conferenciaid }}</td>
+                <td>{{ entity.Nombre }}</td>
+                <td>{% if entity.FechaInicio %}{{ entity.FechaInicio|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if entity.FechaFin %}{{ entity.FechaFin|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ entity.Lugar }}</td>
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('conferenciaalumno_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('conferenciaalumno_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('conferenciaalumno_evento', { 'id': entity.id, 'ida': alumno.id }) }}">Conferencias</a>
                     </li>
                 </ul>
                 </td>
@@ -32,12 +31,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('conferenciaalumno_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
     {% endblock %}

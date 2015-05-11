@@ -53,7 +53,7 @@ class ConferenciumController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('conferencia_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('evento_show', array('id' => $entity->getEvento()->getId())));
         }
 
         return array(
@@ -76,7 +76,10 @@ class ConferenciumController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array(
+            'label' => 'Guardar',
+            'attr'  => array('class' => 'btn'),
+        ));
 
         return $form;
     }

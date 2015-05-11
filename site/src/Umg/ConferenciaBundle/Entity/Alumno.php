@@ -38,7 +38,7 @@ class Alumno
     protected $Nombre;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $Usuario_id;
 
@@ -68,7 +68,7 @@ class Alumno
 
     /**
      * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="alumnos")
-     * @ORM\JoinColumn(name="Usuario_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="Usuario_id", referencedColumnName="id", nullable=true)
      */
     protected $usuario;
 

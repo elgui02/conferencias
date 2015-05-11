@@ -1,0 +1,92 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>{{evento.Nombre}}</h1>
+
+    <div class="row-fluid sortable ui-sortable">
+    <div class="box span12">
+        <div class="box-header">
+            <h2><i class="halflings-icon align-justify"></i><span class="break"></span>Mis conferencias</h2>
+            <div class="box-icon">
+                <a href="#" class="btn-minimize"><i class="halflings-icon chevron-up"></i></a>
+            </div>
+        </div>
+        <div class="box-content">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Conferencia</th>
+                <th>Horainicio</th>
+                <th>Horafin</th>
+                <th>Conferencista</th>
+                <th>Salon</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in mconf %}
+            <tr>
+                <td>{{ entity.Conferencium.Conferencia }}</td>
+                <td>{% if entity.Conferencium.HoraInicio %}{{ entity.Conferencium.HoraInicio|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.Conferencium.HoraFIn %}{{ entity.Conferencium.HoraFIn|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.Conferencium.Conferencistum }}</td>
+                <td>{{ entity.Conferencium.Salon }}</td>
+                <td>
+                    <a href="{{ path('conferenciaalumno_delete', { 'id': entity.id }) }}" class="btn btn-danger"><i class="halflings-icon white trash"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+    </div>
+    </div>
+
+    {% for salon in entities %}
+    <div class="row-fluid sortable ui-sortable">
+    <div class="box span12">
+        <div class="box-header">
+            <h2><i class="halflings-icon align-justify"></i><span class="break"></span>{{salon.Nombre}}</h2>
+            <div class="box-icon">
+                <a href="#" class="btn-minimize"><i class="halflings-icon chevron-up"></i></a>
+            </div>
+        </div>
+        <div class="box-content">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                    <th>Conferencia</th>
+                    <th>Horainicio</th>
+                    <th>Horafin</th>
+                    <th>Conferencista</th>
+                    <th>Actions</th>
+                </thead>
+            </tr>
+        </thead>
+                <tbody>
+                {%for entity in salon.getConferencia %}
+                    <tr>
+                    <td>{{ entity.Conferencia }}</td>
+                    <td>{% if entity.HoraInicio %}{{ entity.HoraInicio|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if entity.HoraFIn %}{{ entity.HoraFIn|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{{ entity.Conferencistum }}</td>
+                    <td>
+                        <a href="{{ path('conferenciaalumno_apartar', { 'idc': entity.id, 'ida':alumno.id }) }}" class="btn btn-info"><i class="halflings-icon white edit"></i></a>
+                    </td>
+                    </tr>
+                {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+    {%endfor%}
+    
+        <ul>
+        <li>
+            <a href="{{ path('conferenciaalumno') }}">
+                Regresar a la lista
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

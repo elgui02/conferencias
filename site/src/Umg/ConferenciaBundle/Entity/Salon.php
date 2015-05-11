@@ -43,6 +43,11 @@ class Salon
     protected $Evento_id;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $Lleno;
+
+    /**
      * @ORM\OneToMany(targetEntity="Conferencium", mappedBy="salon")
      * @ORM\JoinColumn(name="id", referencedColumnName="Salon_id")
      */
@@ -152,6 +157,29 @@ class Salon
     }
 
     /**
+     * Set the value of Lleno.
+     *
+     * @param boolean $Lleno
+     * @return \Umg\ConferenciaBundle\Entity\Salon
+     */
+    public function setLleno($Lleno)
+    {
+        $this->Lleno = $Lleno;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of Lleno.
+     *
+     * @return boolean
+     */
+    public function getLleno()
+    {
+        return $this->Lleno;
+    }
+
+    /**
      * Add Conferencium entity to collection (one to many).
      *
      * @param \Umg\ConferenciaBundle\Entity\Conferencium $conferencium
@@ -212,7 +240,7 @@ class Salon
 
     public function __sleep()
     {
-        return array('id', 'Nombre', 'Cupo', 'Evento_id');
+        return array('id', 'Nombre', 'Cupo', 'Evento_id', 'Lleno');
     }
 
     public function __toString()

@@ -58,6 +58,11 @@ class Conferencium
     protected $Evento_id;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $Pagado;
+
+    /**
      * @ORM\OneToMany(targetEntity="ConferenciaAlumno", mappedBy="conferencium")
      * @ORM\JoinColumn(name="id", referencedColumnName="Conferencia_id")
      */
@@ -248,6 +253,29 @@ class Conferencium
     }
 
     /**
+     * Set the value of Pagado.
+     *
+     * @param boolean $Pagado
+     * @return \Umg\ConferenciaBundle\Entity\Conferencium
+     */
+    public function setPagado($Pagado)
+    {
+        $this->Pagado = $Pagado;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of Pagado.
+     *
+     * @return boolean
+     */
+    public function getPagado()
+    {
+        return $this->Pagado;
+    }
+
+    /**
      * Add ConferenciaAlumno entity to collection (one to many).
      *
      * @param \Umg\ConferenciaBundle\Entity\ConferenciaAlumno $conferenciaAlumno
@@ -354,6 +382,6 @@ class Conferencium
 
     public function __sleep()
     {
-        return array('id', 'Conferencia', 'HoraInicio', 'HoraFin', 'Conferencista_id', 'Salon_id', 'Evento_id');
+        return array('id', 'Conferencia', 'HoraInicio', 'HoraFIn', 'Conferencista_id', 'Salon_id', 'Evento_id', 'Pagado');
     }
 }

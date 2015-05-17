@@ -1,0 +1,43 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Lista de eventos</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Fecha inicio</th>
+                <th>Fecha fin</th>
+                <th>Lugar</th>
+                <th>Habilitado</th>
+                <th>Actiones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('evento_show', { 'id': entity.id }) }}">{{ entity.Nombre }}</a></td>
+                <td>{% if entity.FechaInicio %}{{ entity.FechaInicio|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if entity.FechaFin %}{{ entity.FechaFin|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ entity.Lugar }}</td>
+                <td>{{ entity.Habilitado ? 'Sí' : 'No' }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('evento_show', { 'id': entity.id }) }}">mostrar</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('evento_edit', { 'id': entity.id }) }}">editar</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+            <a href="{{ path('evento_new') }}" class="btn">
+                Nuevo evento
+            </a>
+    {% endblock %}

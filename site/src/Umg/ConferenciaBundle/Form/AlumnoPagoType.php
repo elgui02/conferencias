@@ -16,8 +16,8 @@ class AlumnoPagoType extends AbstractType
     {
         $builder
             ->add('Boleta')
-            ->add('Alumno_id')
             ->add('alumno')
+            ->add('evento')
         ;
     }
     

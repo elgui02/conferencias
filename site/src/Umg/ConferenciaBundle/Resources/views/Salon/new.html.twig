@@ -1,14 +1,14 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Salon creation</h1>
+    <h1>Salón para: "{{entity.Evento.Nombre}}"</h1>
 
     {{ form(form) }}
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('salon') }}">
-            Back to the list
+        <a href="{{ path('evento_show',{'id':entity.Evento.id}) }}">
+            Regresar al evento
         </a>
     </li>
 </ul>

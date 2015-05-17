@@ -17,6 +17,7 @@ class SalonType extends AbstractType
         $builder
             ->add('Nombre')
             ->add('Cupo')
+            ->add('evento')
         ;
     }
     

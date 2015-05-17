@@ -16,12 +16,17 @@ class ConferenciumType extends AbstractType
     {
         $builder
             ->add('Conferencia')
-            ->add('HoraInicio')
-            ->add('HoraFIn')
-            ->add('Conferencista_id')
-            ->add('Salon_id')
+            ->add('HoraInicio','datetime',array(
+                'date_widget' => "single_text", 
+                'time_widget' => "single_text"
+            ))
+            ->add('HoraFin','datetime',array(
+                'date_widget' => "single_text", 
+                'time_widget' => "single_text"
+            ))
             ->add('conferencistum')
             ->add('salon')
+            ->add('evento')
         ;
     }
     

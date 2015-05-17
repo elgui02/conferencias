@@ -1,6 +1,10 @@
-umg_conferencia_homepage:
+home:
     path:     /
     defaults: { _controller: UmgConferenciaBundle:Default:index }
+
+Evento_home:
+    resource:	"@UmgConferenciaBundle/Controller/EventoController.php"
+    type:	annotation
 
 Alumno_home:
     resource:	"@UmgConferenciaBundle/Controller/AlumnoController.php"

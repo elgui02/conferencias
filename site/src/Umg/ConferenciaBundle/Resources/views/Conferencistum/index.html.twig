@@ -1,34 +1,31 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Conferencistum list</h1>
+    <h1>Listado de conferencistas</h1>
 
-    <table class="records_list">
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nombre</th>
                 <th>Correo</th>
                 <th>Telefono</th>
-                <th>Observaciones</th>
-                <th>Actions</th>
+                <th>Actiones</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('conferencista_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><a href="{{ path('conferencista_show', { 'id': entity.id }) }}">{{ entity.Nombre }}</a></td>
                 <td>{{ entity.Nombre }}</td>
                 <td>{{ entity.Correo }}</td>
                 <td>{{ entity.Telefono }}</td>
-                <td>{{ entity.Observaciones }}</td>
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('conferencista_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('conferencista_show', { 'id': entity.id }) }}">mostrar</a>
                     </li>
                     <li>
-                        <a href="{{ path('conferencista_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('conferencista_edit', { 'id': entity.id }) }}">editar</a>
                     </li>
                 </ul>
                 </td>
@@ -37,11 +34,7 @@
         </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('conferencista_new') }}">
-                Create a new entry
+            <a href="{{ path('conferencista_new') }}" class="btn">
+                Nuevo
             </a>
-        </li>
-    </ul>
     {% endblock %}

@@ -53,7 +53,7 @@ class SalonController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('salon_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('evento_show', array('id' => $entity->getEvento()->getId())));
         }
 
         return array(
@@ -84,13 +84,17 @@ class SalonController extends Controller
     /**
      * Displays a form to create a new Salon entity.
      *
-     * @Route("/new", name="salon_new")
+     * @Route("/{id}/new", name="salon_new")
      * @Method("GET")
      * @Template()
      */
-    public function newAction()
+    public function newAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
+        $ev = $em->getRepository('UmgConferenciaBundle:Evento')->find($id);
+
         $entity = new Salon();
+        $entity->setEvento($ev);
         $form   = $this->createCreateForm($entity);
 
         return array(

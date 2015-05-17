@@ -1,14 +1,10 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Conferencistum</h1>
+    <h1>{{entity.Nombre}}</h1>
 
-    <table class="record_properties">
+    <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
             <tr>
                 <th>Nombre</th>
                 <td>{{ entity.Nombre }}</td>
@@ -31,14 +27,13 @@
         <ul class="record_actions">
     <li>
         <a href="{{ path('conferencista') }}">
-            Back to the list
+            Regresar a la lista
         </a>
     </li>
     <li>
-        <a href="{{ path('conferencista_edit', { 'id': entity.id }) }}">
-            Edit
+        <a href="{{ path('conferencista_edit', { 'id': entity.id }) }}" class="btn">
+            Editar
         </a>
     </li>
-    <li>{{ form(delete_form) }}</li>
 </ul>
 {% endblock %}

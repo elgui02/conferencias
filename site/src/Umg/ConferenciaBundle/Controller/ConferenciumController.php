@@ -84,13 +84,16 @@ class ConferenciumController extends Controller
     /**
      * Displays a form to create a new Conferencium entity.
      *
-     * @Route("/new", name="conferencia_new")
+     * @Route("/{id}/new", name="conferencia_new")
      * @Method("GET")
      * @Template()
      */
-    public function newAction()
+    public function newAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
+        $ev = $em->getRepository('UmgConferenciaBundle:Evento')->find($id);
         $entity = new Conferencium();
+        $entity->setEvento($ev);
         $form   = $this->createCreateForm($entity);
 
         return array(

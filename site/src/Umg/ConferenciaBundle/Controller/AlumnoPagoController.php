@@ -7,7 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Umg\ConferenciaBundle\Entity\Alumno;
 use Umg\ConferenciaBundle\Entity\AlumnoPago;
+use Umg\ConferenciaBundle\Entity\Evento;
 use Umg\ConferenciaBundle\Form\AlumnoPagoType;
 
 /**
@@ -35,6 +37,45 @@ class AlumnoPagoController extends Controller
             'entities' => $entities,
         );
     }
+    
+    /**
+     * Lists all Eventos entities.
+     *
+     * @Route("/eventos", name="pagoeventos")
+     * @Method("GET")
+     * @Template()
+     */
+    public function eventoAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('UmgConferenciaBundle:Evento')->findAll();
+
+        return array(
+            'entities' => $entities,
+        );
+    }
+
+    /**
+     * Lists all Eventos entities.
+     *
+     * @Route("/{id}/alumnos", name="pagoalumnos")
+     * @Method("GET")
+     * @Template()
+     */
+    public function alumnoAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ev = $em->getRepository('UmgConferenciaBundle:Evento')->find($id);
+        $entities = $em->getRepository('UmgConferenciaBundle:Alumno')->findAlumnosSinPagar($ev);
+
+        return array(
+            'evento'   => $ev,
+            'entities' => $entities,
+        );
+    }
+
+
     /**
      * Creates a new AlumnoPago entity.
      *
@@ -53,7 +94,7 @@ class AlumnoPagoController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('alumnopago_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('pagoalumnos', array('id' => $entity->getEvento()->getId())));
         }
 
         return array(
@@ -84,13 +125,19 @@ class AlumnoPagoController extends Controller
     /**
      * Displays a form to create a new AlumnoPago entity.
      *
-     * @Route("/new", name="alumnopago_new")
+     * @Route("/{ida}/new/{ide}", name="alumnopago_new")
      * @Method("GET")
      * @Template()
      */
-    public function newAction()
+    public function newAction($ida,$ide)
     {
+        $em = $this->getDoctrine()->getManager();
+        $ev = $em->getRepository('UmgConferenciaBundle:Evento')->find($ide);
+        $al = $em->getRepository('UmgConferenciaBundle:Alumno')->find($ida);
+
         $entity = new AlumnoPago();
+        $entity->setAlumno($al);
+        $entity->setEvento($ev);
         $form   = $this->createCreateForm($entity);
 
         return array(

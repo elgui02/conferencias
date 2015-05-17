@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Listado de alumnos</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Carne</th>
+                <th>Nombre</th>
+                <th>Actiones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.Carne }}</td>
+                <td>{{ entity.Nombre }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('alumnopago_new', { 'ida': entity.id,'ide':evento.id }) }}">pagar</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('alumnopago') }}">
+                Regresar al listado
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

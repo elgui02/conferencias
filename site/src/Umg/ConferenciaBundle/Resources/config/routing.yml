@@ -11,6 +11,10 @@ Alumno_home:
     type:	annotation
 #alumno
 
+AlumnoEvento_home:
+    resource:	"@UmgConferenciaBundle/Controller/AlumnoEventoController.php"
+    type:	annotation
+
 AlumnoPago_home:
     resource:   "@UmgConferenciaBundle/Controller/AlumnoPagoController.php"
     type:       annotation

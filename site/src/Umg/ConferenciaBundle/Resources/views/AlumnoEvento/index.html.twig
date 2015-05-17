@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Alumnos en el evento: "{{evento.Nombre}}"</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Carne</th>
+                <th>Nombre</th>
+                <th>Actiones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.Alumno.Carne }}</td>
+                <td>{{ entity.Alumno.Nombre }}</td>
+                <td>
+                    <a href="{{ path('alumnoevento_delete', { 'id': entity.id }) }}" class="btn btn-danger"><i class="halflings-icon white trash"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('alumnoevento_new',{'id':evento.id}) }}">
+                Asignar alumno
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('evento_show',{'id':evento.id}) }}">
+                Regresar al evento
+            </a>
+        </li>
+
+    </ul>
+    {% endblock %}

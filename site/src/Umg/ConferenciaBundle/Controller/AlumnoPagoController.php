@@ -91,10 +91,45 @@ class AlumnoPagoController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $em->getConnection()->beginTransaction();
+ 
+            try {
+                
+                $em->persist($entity);
+                $em->flush();
 
-            return $this->redirect($this->generateUrl('pagoalumnos', array('id' => $entity->getEvento()->getId())));
+                if(!$entity->getAlumno()->getUsuario())
+                {
+                    $userManager = $this->container->get('fos_user.user_manager');
+
+                    $userAdmin = $userManager->createUser();
+
+                    $userAdmin->setUsername($entity->getAlumno()->getCarne());
+                    $userAdmin->setEmail($entity->getAlumno()->getCarne().'@umg.com');
+                    $userAdmin->setPlainPassword($entity->getAlumno()->getCarne());
+                    $userAdmin->setEnabled(true);
+
+                    $userManager->updateUser($userAdmin, true);
+                    
+
+                    $alumno = $entity->getAlumno();
+                    $alumno->setUsuario($userAdmin);
+
+                    $em->persist($alumno);
+                    $em->flush();
+                }
+                $em->getConnection()->commit();
+                return $this->redirect($this->generateUrl('pagoalumnos', array('id' => $entity->getEvento()->getId())));
+                 
+            } 
+            catch (Exception $e) {
+                 $em->getConnection()->rollback();
+                 return array(
+                        'entity' => $entity,
+                        'form'   => $form->createView(),
+                    );
+                 throw $e;
+            }         
         }
 
         return array(

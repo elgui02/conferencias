@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends '::estudiante.html.twig' %}
 
 {% block body -%}
     <h1>Lista de eventos</h1>
@@ -23,7 +23,7 @@
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('conferenciaalumno_evento', { 'id': entity.id, 'ida': alumno.id }) }}">Conferencias</a>
+                        <a href="{{ path('conferenciaalumno_evento', { 'id': entity.id }) }}">Conferencias</a>
                     </li>
                 </ul>
                 </td>

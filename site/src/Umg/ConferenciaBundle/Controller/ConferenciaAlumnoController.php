@@ -29,7 +29,8 @@ class ConferenciaAlumnoController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $alumno = $em->getRepository('UmgConferenciaBundle:Alumno')->find(3);
+        $user = $this->get('security.context')->getToken()->getUser();
+        $alumno = $em->getRepository('UmgConferenciaBundle:Alumno')->findOneByUsuario($user);
         $entities = $em->getRepository('UmgConferenciaBundle:Alumno')->findEventoAlumno($alumno->getId());
 
         return array(
@@ -41,16 +42,17 @@ class ConferenciaAlumnoController extends Controller
     /**
      * Lists all ConferenciaAlumno entities.
      *
-     * @Route("/{id}/evento/{ida}", name="conferenciaalumno_evento")
+     * @Route("/{id}/evento", name="conferenciaalumno_evento")
      * @Method("GET")
      * @Template()
      */
-    public function eventoAction($id,$ida)
+    public function eventoAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $alumno = $em->getRepository('UmgConferenciaBundle:Alumno')->find($ida);
+        $user = $this->get('security.context')->getToken()->getUser();
+        $alumno = $em->getRepository('UmgConferenciaBundle:Alumno')->findOneByUsuario($user);
         $evento = $em->getRepository('UmgConferenciaBundle:Evento')->find($id);
-        $conf = $em->getRepository('UmgConferenciaBundle:Alumno')->findConferenciaEventoAlumno($ida,$id);
+        $conf = $em->getRepository('UmgConferenciaBundle:Alumno')->findConferenciaEventoAlumno($alumno->getId(),$id);
         return array(
             'entities' => $evento->getSalons(),
             'evento'   => $evento,
@@ -62,15 +64,16 @@ class ConferenciaAlumnoController extends Controller
     /**
      * Lists all ConferenciaAlumno entities.
      *
-     * @Route("/{idc}/apartar/{ida}", name="conferenciaalumno_apartar")
+     * @Route("/{id}/apartar", name="conferenciaalumno_apartar")
      * @Method("GET")
      * @Template()
      */
-    public function apartarAction($idc,$ida)
+    public function apartarAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $alumno = $em->getRepository('UmgConferenciaBundle:Alumno')->find($ida);
-        $conf = $em->getRepository('UmgConferenciaBundle:Conferencium')->find($idc);
+        $user = $this->get('security.context')->getToken()->getUser();
+        $alumno = $em->getRepository('UmgConferenciaBundle:Alumno')->findOneByUsuario($user);
+        $conf = $em->getRepository('UmgConferenciaBundle:Conferencium')->find($id);
         
         $em->getConnection()->beginTransaction();
          
@@ -86,7 +89,6 @@ class ConferenciaAlumnoController extends Controller
                 $em->getConnection()->commit();
                 return $this->redirect($this->generateUrl('conferenciaalumno_evento',array(
                     'id'  => $conf->getEvento()->getId(),
-                    'ida' => $alumno->getId(),
                     )
                 ));
         } 
@@ -94,7 +96,6 @@ class ConferenciaAlumnoController extends Controller
              $em->getConnection()->rollback();
              return $this->redirect($this->generateUrl('conferenciaalumno_evento',array(
                 'id'  => $conf->getEvento()->getId(),
-                'ida' => $alumno->getId(),
                 )));
              throw $e;
         }    

@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends '::estudiante.html.twig' %}
 
 {% block body -%}
     <h1>{{evento.Nombre}}</h1>
@@ -71,7 +71,15 @@
                     <td>{% if entity.HoraFIn %}{{ entity.HoraFIn|date('Y-m-d H:i:s') }}{% endif %}</td>
                     <td>{{ entity.Conferencistum }}</td>
                     <td>
-                        <a href="{{ path('conferenciaalumno_apartar', { 'idc': entity.id, 'ida':alumno.id }) }}" class="btn btn-info"><i class="halflings-icon white edit"></i></a>
+                        {% set x= 0 %}
+                        {% for conf in mconf %}
+                            {%if conf.Conferencium.id == entity.id %}
+                                {%set x = 1 %}
+                            {%endif%}
+                        {%endfor%}
+                        {%if x== 0%}
+                        <a href="{{ path('conferenciaalumno_apartar', { 'id': entity.id}) }}" class="btn btn-info"><i class="halflings-icon white edit"></i></a>
+                        {%endif%}
                     </td>
                     </tr>
                 {%endfor%}

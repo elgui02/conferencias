@@ -12,6 +12,7 @@ use PHPExcel;
 use PHPExcel_IOFactory;
 use Umg\ConferenciaBundle\Entity\Evento;
 use Umg\ConferenciaBundle\Entity\Alumno;
+use Umg\ConferenciaBundle\Entity\AlumnoEvento;
 use Umg\ConferenciaBundle\Form\EventoType;
 
 class CargarArchivoController extends Controller
@@ -22,7 +23,7 @@ class CargarArchivoController extends Controller
           'ev'=>$id,
       ));
     }
-    
+
     public function showAction(Request $request)
     {
       if($request->getMethod() == 'POST')
@@ -32,8 +33,8 @@ class CargarArchivoController extends Controller
       }
 
       $em = $this->getDoctrine()->getManager();
-      $evento = $em->getRepository('UmgConferenciaBundle:Evento')->findOneById($request->get('evento'));  
-      
+      $evento = $em->getRepository('UmgConferenciaBundle:Evento')->findOneById($request->get('evento'));
+
       $inputFileName=$archivo;
       //lectura del archivo
       try {
@@ -41,8 +42,8 @@ class CargarArchivoController extends Controller
             $objReader = PHPExcel_IOFactory::createReader($inputFileType);
             $objPHPExcel = $objReader->load($inputFileName);
 
-          } 
-      catch (Exception $e) 
+          }
+      catch (Exception $e)
           {
             die('Error al Cargar el Archivo "' . pathinfo($inputFileName, PATHINFO_BASENAME) . '": ' . $e->getMessage());
           }
@@ -66,7 +67,7 @@ class CargarArchivoController extends Controller
             $file[]= $data;
           }
       }
-      
+
       $lista= $highestRow - 6;
       /*
       Obtencion de los numeros de carnet segun cvs
@@ -81,7 +82,7 @@ class CargarArchivoController extends Controller
        }
       /*
       Obtencion del los nombres de los alumnos segun cvs
-      */ 
+      */
       for ($contalum = 0; $contalum <= $lista; $contalum++)
       {
         foreach($file[$contalum] as $m=>$v)
@@ -90,7 +91,35 @@ class CargarArchivoController extends Controller
             $nameStudents[]=$v;
           }
       }
-      var_dump($codeStudents);
-      var_dump($nameStudents);
+      for ($contalum = 0; $contalum <= $lista; $contalum++)
+      {
+        $alumno = $em->getRepository('UmgConferenciaBundle:Alumno')->findOneBy(array(
+          'Carne' => $codeStudents[$contalum],
+        ));
+        if( !$alumno )
+        {
+          $alumno = new Alumno();
+          $alumno->setCarne($codeStudents[$contalum]);
+          $alumno->setNombre($nameStudents[$contalum]);
+          $em->persist($alumno);
+          $em->flush();
+        }
+
+        $ev = $em->getRepository('UmgConferenciaBundle:AlumnoEvento')->findOneById(array(
+          'alumno' => $alumno,
+          'evento' => $evento,
+        ));
+        if( !$ev)
+        {
+           var_dump("entro");
+           $ev = new AlumnoEvento();
+           $ev->setAlumno($alumno);
+           $ev->setEvento($evento);
+           $em->persist($ev);
+           $em->flush();
+        }
+      }
+
+      return $this->redirect($this->generateUrl('alumnoevento', array('id' => $evento->getId())));
     }
 }

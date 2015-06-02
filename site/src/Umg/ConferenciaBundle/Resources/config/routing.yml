@@ -54,3 +54,15 @@ Usuario_home:
     resource:   "@UmgConferenciaBundle/Controller/UsuarioController.php"
     type:       annotation
 #usuario
+
+cargararchivo_home:
+    path:   /cargar
+    defaults: {_controller: UmgConferenciaBundle:CargarArchivo:importar}
+
+cargararchivo:
+    path:   /import/{id}
+    defaults: {_controller: UmgConferenciaBundle:CargarArchivo:index}
+
+showarchivo:
+    path:   /import/show
+    defaults: {_controller: UmgConferenciaBundle:CargarArchivo:show}

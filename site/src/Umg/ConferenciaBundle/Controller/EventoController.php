@@ -244,4 +244,24 @@ class EventoController extends Controller
             ->getForm()
         ;
     }
+    /**
+     * Lists all Evento entities.
+     *
+     * @Route("/{id}/viaticos", name="evento_viaticos")
+     * @Method("GET")
+     * @Template()
+     */
+    public function viaticosAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $evento = $em->getRepository('UmgConferenciaBundle:Evento')->find($id);
+        $entities = $em->getRepository('UmgConferenciaBundle:Conferencistum')->findViaticosSinPagar($evento->getId());
+        $entitie = $em->getRepository('UmgConferenciaBundle:Conferencistum')->findViaticosPagados($evento->getId());
+
+        return array(
+            'entities' => $entities,
+            'entitie' => $entitie,
+            'evento'   => $evento,
+        );
+    }
 }

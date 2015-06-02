@@ -49,6 +49,9 @@ Salon_home:
     resource:   "@UmgConferenciaBundle/Controller/SalonController.php"
     type:       annotation
 #salon
+Pago_home:
+    resource:   "@UmgConferenciaBundle/Controller/PagoController.php"
+    type:       annotation
 
 Usuario_home:
     resource:   "@UmgConferenciaBundle/Controller/UsuarioController.php"

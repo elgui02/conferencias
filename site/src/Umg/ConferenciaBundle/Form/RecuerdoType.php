@@ -17,7 +17,7 @@ class RecuerdoType extends AbstractType
         $builder
             ->add('Recuerdo')
             ->add('Observaciones')
-            ->add('Cantidad')
+            ->add('evento')
         ;
     }
     

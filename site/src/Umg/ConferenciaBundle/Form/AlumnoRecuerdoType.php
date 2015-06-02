@@ -15,10 +15,10 @@ class AlumnoRecuerdoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('FechaHora')
-            ->add('Alumno_id')
-            ->add('Recuerdo_id')
-            ->add('Usuario_id')
+            ->add('FechaHora','datetime',array(
+                'date_widget' => "single_text", 
+                'time_widget' => "single_text"
+            ))
             ->add('alumno')
             ->add('recuerdo')
             ->add('usuario')

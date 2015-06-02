@@ -40,4 +40,16 @@ class AlumnoRepository extends EntityRepository
             ->setParameter('evento',$evento)
             ->getResult();
     }
+
+    public function findRecuerdos($alumno, $evento)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT r FROM UmgConferenciaBundle:Recuerdo r
+                WHERE r.Alumno_id = :alumno and e.Evento_id = :evento'
+                )
+            ->setParameter('alumno',$alumno)
+            ->setParameter('evento',$evento)
+            ->getResult();
+    }
 }

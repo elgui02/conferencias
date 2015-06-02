@@ -8,7 +8,7 @@
             <tr>
                 <th>Carne</th>
                 <th>Nombre</th>
-                <th>Actiones</th>
+                <th colspan="2">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -17,8 +17,10 @@
                 <td>{{ entity.Alumno.Carne }}</td>
                 <td>{{ entity.Alumno.Nombre }}</td>
                 <td>
+                    <a href="{{ path('alumnorecuerdo', { 'id': entity.Alumno.id,'ev': evento.id }) }}" class="btn"><i class="halflings-icon white pencil"></i></a>                  
                     <a href="{{ path('alumnoevento_delete', { 'id': entity.id }) }}" class="btn btn-danger"><i class="halflings-icon white trash"></i></a>
                 </td>
+                
             </tr>
         {% endfor %}
         </tbody>

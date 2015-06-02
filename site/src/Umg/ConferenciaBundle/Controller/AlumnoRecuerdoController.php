@@ -21,18 +21,27 @@ class AlumnoRecuerdoController extends Controller
     /**
      * Lists all AlumnoRecuerdo entities.
      *
-     * @Route("/", name="alumnorecuerdo")
+     * @Route("/{id}/recuerdos/{ev}", name="alumnorecuerdo")
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($id,$ev)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('UmgConferenciaBundle:AlumnoRecuerdo')->findAll();
+        $evento = $em->getRepository('UmgConferenciaBundle:Evento')->findOneById($ev);
+        $recuerdo = $em->getRepository('UmgConferenciaBundle:Recuerdo')->findOneBy(array(
+            'evento' => $evento
+        ));
+        $alumno = $em->getRepository('UmgConferenciaBundle:Alumno')->findOneById($id);
+        $entities = $em->getRepository('UmgConferenciaBundle:AlumnoRecuerdo')->findBy(array(
+            'recuerdo'=>$recuerdo,
+            'alumno'=>$alumno,
+        ));
 
         return array(
             'entities' => $entities,
+            'evento' => $evento,
+            'alumno' => $alumno,
         );
     }
     /**
@@ -53,7 +62,10 @@ class AlumnoRecuerdoController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('alumnorecuerdo_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('alumnorecuerdo', array(
+                'id' => $entity->getAlumno()->getId(),
+                'ev' => $entity->getRecuerdo()->getEvento()->getId(),
+            )));
         }
 
         return array(
@@ -84,13 +96,18 @@ class AlumnoRecuerdoController extends Controller
     /**
      * Displays a form to create a new AlumnoRecuerdo entity.
      *
-     * @Route("/new", name="alumnorecuerdo_new")
+     * @Route("/{id}/new/{ev}", name="alumnorecuerdo_new")
      * @Method("GET")
      * @Template()
      */
-    public function newAction()
+    public function newAction($id,$ev)
     {
+        $em = $this->getDoctrine()->getManager();
+        $evento = $em->getRepository('UmgConferenciaBundle:Evento')->findOneById($ev);
+        $alumno = $em->getRepository('UmgConferenciaBundle:Alumno')->findOneById($id);
         $entity = new AlumnoRecuerdo();
+        $entity->setAlumno($alumno);
+        $entity->setFechaHora(new \DateTime());
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -225,7 +242,10 @@ class AlumnoRecuerdoController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('alumnorecuerdo'));
+        return $this->redirect($this->generateUrl('alumnorecuerdo',array(
+            'id'=>$entity->getAlumno()->getId(),
+            'ev'=>$entity->getRecuerdo()->getEvento()->getId(),
+        )));
     }
 
     /**

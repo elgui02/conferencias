@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class RecuerdoType extends AbstractType
+class PagoType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,9 +15,10 @@ class RecuerdoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Recuerdo')
-            ->add('Observaciones')
-            ->add('evento')
+            ->add('Documento')
+            ->add('Monto')
+            ->add('conferencistum')
+            ->add('usuario')
         ;
     }
     
@@ -27,7 +28,7 @@ class RecuerdoType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Umg\ConferenciaBundle\Entity\Recuerdo'
+            'data_class' => 'Umg\ConferenciaBundle\Entity\Pago'
         ));
     }
 
@@ -36,6 +37,6 @@ class RecuerdoType extends AbstractType
      */
     public function getName()
     {
-        return 'umg_conferenciabundle_recuerdo';
+        return 'umg_conferenciabundle_pago';
     }
 }

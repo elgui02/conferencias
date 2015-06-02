@@ -53,7 +53,7 @@ class RecuerdoController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('recuerdo_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('evento_show', array('id' => $entity->getEvento()->getId())));
         }
 
         return array(
@@ -84,13 +84,17 @@ class RecuerdoController extends Controller
     /**
      * Displays a form to create a new Recuerdo entity.
      *
-     * @Route("/new", name="recuerdo_new")
+     * @Route("/{id}/new", name="recuerdo_new")
      * @Method("GET")
      * @Template()
      */
-    public function newAction()
+    public function newAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $evento = $em->getRepository('UmgConferenciaBundle:Evento')->find($id);
         $entity = new Recuerdo();
+        $entity->setEvento($evento);
         $form   = $this->createCreateForm($entity);
 
         return array(

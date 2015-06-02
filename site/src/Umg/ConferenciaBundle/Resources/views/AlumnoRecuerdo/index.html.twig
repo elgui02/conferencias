@@ -1,16 +1,14 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>AlumnoRecuerdo list</h1>
+    <h1>listado de suvenires del alumno: {{alumno.Nombre}}</h1>
 
-    <table class="records_list">
+    <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Fechahora</th>
-                <th>Alumno_id</th>
-                <th>Recuerdo_id</th>
-                <th>Usuario_id</th>
+                <th>Fecha hora</th>
+                <th>Recuerdo</th>
+                <th>Usuario</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -39,7 +37,7 @@
 
         <ul>
         <li>
-            <a href="{{ path('alumnorecuerdo_new') }}">
+            <a href="{{ path('alumnorecuerdo_new',{'id':alumno.id,'ev':evento.id}) }}">
                 Create a new entry
             </a>
         </li>

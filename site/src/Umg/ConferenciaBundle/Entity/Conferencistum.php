@@ -15,7 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Umg\ConferenciaBundle\Entity\Conferencistum
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Umg\ConferenciaBundle\Entity\ConferencistaRepository")
  * @ORM\Table(name="Conferencista")
  */
 class Conferencistum

@@ -1,0 +1,58 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Listado de conferencistas [pagados]</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Actiones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entitie %}
+            <tr>
+                <td><a href="{{ path('conferencista_show', { 'id': entity.id }) }}">{{ entity.Nombre }}</a></td>
+                <td>{{ entity.Correo }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{# path('pago_show', { 'id': entity.id, 'ev': evento.id }) #}"></a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h1>Listado de conferencistas [sin pagar]</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Actiones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('conferencista_show', { 'id': entity.id }) }}">{{ entity.Nombre }}</a></td>
+                <td>{{ entity.Correo }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('pago_new', { 'id': entity.id, 'ev': evento.id }) }}">Pagar</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% endblock %}

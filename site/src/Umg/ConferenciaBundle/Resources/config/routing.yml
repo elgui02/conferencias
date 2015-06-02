@@ -60,7 +60,7 @@ cargararchivo_home:
     defaults: {_controller: UmgConferenciaBundle:CargarArchivo:importar}
 
 cargararchivo:
-    path:   /import/{id}
+    path:   /{id}/import
     defaults: {_controller: UmgConferenciaBundle:CargarArchivo:index}
 
 showarchivo:
